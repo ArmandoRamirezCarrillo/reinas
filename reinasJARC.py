@@ -81,6 +81,8 @@ def tableroAjedrez(tablero,tamaño):
 #funcion principal donde se va a ejecutar todo
 def principal():
     tamaño = int(input("Escribe el tamaño del tablero: "))
+    fila = int(input("Escribe la posicion inicial en la fila: "))
+    columna = int(input("Escribe la posicion inicial en la columna: "))
 
     tablero = []
 
@@ -88,7 +90,7 @@ def principal():
         tablero.append(llenarTablero(tamaño))
 
     #Colocando a la primera reina
-    tablero[0][0] = "R"
+    tablero[fila][columna] = "R"
 
     #Acomodando las demas reinas
     if(acomodandoReinas(tablero,0) == True):
