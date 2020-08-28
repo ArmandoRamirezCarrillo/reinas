@@ -5,6 +5,8 @@ Este programa se realizo utilizando funciones y recursividad.
 
 Se realizo sin utilizar librerias externas.
 
+El programa se ejecuta en la termina usando py reinas.py
+
 En el historial de commits, hay varias versiones del programa.
 
 Atentamente
