@@ -1,23 +1,25 @@
 # Variables globales
-global tamañoTablero
-tamañoTablero = 8
+# global numReinas
+# numReinas = 0
 
 #funcion para llenar el tablero por primera vez
-def llenarTablero(tamañoTablero):
+def llenarTablero(tamaño):
     lista = []
 
-    for i in range(tamañoTablero):
+    for i in range(tamaño):
         lista.append(0)
     return lista
 
 def analizandolados(tablero,fila,columna):
+    tamaño = len(tablero)
+
     #izquierda
     for i in range(columna):
         if(tablero[fila][i] == "R"):
             return False
 
     #derecha
-    for i in range(columna,tamañoTablero,1):
+    for i in range(columna,tamaño,1):
         if(tablero[fila][i] == "R"):
             return False
 
@@ -27,17 +29,17 @@ def analizandolados(tablero,fila,columna):
             return False
         
     #diagonal superior derecha
-    for f,c in zip(range(fila,-1,-1), range(columna,tamañoTablero,1)):
+    for f,c in zip(range(fila,-1,-1), range(columna,tamaño,1)):
         if(tablero[f][c] == "R"):
             return False
 
     #diagonal inferior izquierda
-    for f,c in zip(range(fila,tamañoTablero,1), range(columna,-1,-1)):
+    for f,c in zip(range(fila,tamaño,1), range(columna,-1,-1)):
         if(tablero[f][c] == "R"):
             return False
 
     #diagonal inferior derecha
-    for f,c in zip(range(fila,-1,-1), range(columna,tamañoTablero,1)):
+    for f,c in zip(range(fila,-1,-1), range(columna,tamaño,1)):
         if(tablero[f][c] == "R"):
             return False
 
@@ -45,20 +47,22 @@ def analizandolados(tablero,fila,columna):
 
 #Verifica si la columna ya tiene o no una Reina
 def columnaLlena(tablero,columna):
-    for i in range(tamañoTablero):
+    tamaño = len(tablero)
+    for i in range(tamaño):
         if(tablero[i][columna] == "R"):
             return True
     return False
 
 def acomodandoReinas(tablero, columna):
-    if(columna >= tamañoTablero):
+    tamaño = len(tablero)
+    if(columna >= tamaño):
         return True
     
     if(columnaLlena(tablero,columna) == True):
         if(acomodandoReinas(tablero, columna + 1) == True):
             return True
         
-    for i in range(tamañoTablero):
+    for i in range(tamaño):
         if(analizandolados(tablero,i,columna)):
             tablero[i][columna] = "R"
             if(acomodandoReinas(tablero,columna + 1) == True):
@@ -68,27 +72,32 @@ def acomodandoReinas(tablero, columna):
     return False
 
 #Imprime el tablero de ajedrez, con la solucion
-def tableroAjedrez(tablero): 
-	for i in range(tamañoTablero):
-		for j in range(tamañoTablero): 
-			print (tablero[i][j], end = " ") 
-		print()
+def tableroAjedrez(tablero,tamaño):
+    for i in range(tamaño):
+        for j in range(tamaño):
+            print(tablero[i][j], end = " ")
+        print()
 
 #funcion principal donde se va a ejecutar todo
 def principal():
+    tamaño = int(input("Escribe el tamaño del tablero: "))
+
     tablero = []
 
-    for i in range(tamañoTablero):
-        tablero.append(llenarTablero(tamañoTablero))
+    for i in range(tamaño):
+        tablero.append(llenarTablero(tamaño))
 
     #Colocando a la primera reina
     tablero[0][0] = "R"
 
     #Acomodando las demas reinas
     if(acomodandoReinas(tablero,0) == True):
-        tableroAjedrez(tablero)
+        tableroAjedrez(tablero,tamaño)
         print("\nPrograma Finalizado")
         print("\nJose Armando Ramirez Carrillo")
         return True
+    else:
+        print("\nSe hizo todo lo posible, pero no hay solucion")
+        return False
 
 principal()
